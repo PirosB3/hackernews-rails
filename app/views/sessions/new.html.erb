@@ -1,0 +1,26 @@
+<% content_for(:title) { "Login" } %>
+
+<div class="text-[10pt]">
+  <h2 class="text-[13pt] mb-3">Login</h2>
+
+  <%= form_with(url: login_path, method: :post, class: "text-[10pt]") do |f| %>
+    <table cellpadding="2">
+      <tr>
+        <td class="text-right">username:</td>
+        <td><%= f.text_field :username, size: 20, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td class="text-right">password:</td>
+        <td><%= f.password_field :password, size: 20, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit "login", class: "bg-gray-200 border border-gray-400 px-3 py-0.5 cursor-pointer text-[10pt] mt-1" %></td>
+      </tr>
+    </table>
+  <% end %>
+
+  <p class="mt-3 text-[#828282]">
+    Don't have an account? <%= link_to "Create one", signup_path, class: "text-[#828282] underline" %>.
+  </p>
+</div>

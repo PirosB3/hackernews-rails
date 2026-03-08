@@ -1,0 +1,38 @@
+<% content_for(:title) { "Sign Up" } %>
+
+<div class="text-[10pt]">
+  <h2 class="text-[13pt] mb-3">Create Account</h2>
+
+  <%= form_with(model: @user, url: signup_path, class: "text-[10pt]") do |f| %>
+    <% if @user.errors.any? %>
+      <div class="bg-red-100 border border-red-300 text-red-800 p-2 mb-3 text-[10pt]">
+        <% @user.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <table cellpadding="2">
+      <tr>
+        <td class="text-right">username:</td>
+        <td><%= f.text_field :username, size: 20, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td class="text-right">email:</td>
+        <td><%= f.text_field :email, size: 30, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td class="text-right">password:</td>
+        <td><%= f.password_field :password, size: 20, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td class="text-right">confirm:</td>
+        <td><%= f.password_field :password_confirmation, size: 20, class: "border border-gray-400 p-0.5 text-[10pt]" %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit "create account", class: "bg-gray-200 border border-gray-400 px-3 py-0.5 cursor-pointer text-[10pt] mt-1" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

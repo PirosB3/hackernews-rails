@@ -1,0 +1,11 @@
+<% content_for(:title) { "Submit" } %>
+
+<div class="text-[10pt]">
+  <h2 class="text-[13pt] mb-3">Submit</h2>
+
+  <%= render "form", post: @post %>
+
+  <p class="mt-4 text-[#828282]">
+    Leave url blank to submit a question for discussion. If there is no url, the text of the submission will appear at the top of the thread.
+  </p>
+</div>

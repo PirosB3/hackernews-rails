@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Hacker News" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Verdana&display=swap');
+      body { font-family: Verdana, Geneva, sans-serif; font-size: 10pt; background: #f6f6ef; }
+    </style>
+  </head>
+
+  <body class="bg-[#f6f6ef]">
+    <div class="max-w-[85%] mx-auto">
+      <%# Header %>
+      <header class="bg-[#ff6600] px-1 py-0.5">
+        <nav class="flex items-center gap-1 text-[13px]">
+          <a href="<%= root_path %>" class="flex items-center gap-1 mr-1">
+            <div class="border border-white w-[18px] h-[18px] flex items-center justify-center text-white font-bold text-[13px]">Y</div>
+          </a>
+          <a href="<%= root_path %>" class="font-bold text-black hover:text-black no-underline">Hacker News</a>
+          <span class="text-black">|</span>
+          <a href="<%= newest_path %>" class="text-black hover:text-black no-underline">new</a>
+          <span class="text-black">|</span>
+          <a href="<%= ask_path %>" class="text-black hover:text-black no-underline">ask</a>
+          <span class="text-black">|</span>
+          <a href="<%= show_hn_path %>" class="text-black hover:text-black no-underline">show</a>
+          <span class="text-black">|</span>
+          <a href="<%= new_post_path %>" class="text-black hover:text-black no-underline">submit</a>
+          <span class="flex-1"></span>
+          <% if logged_in? %>
+            <a href="<%= user_path(username: current_user.username) %>" class="text-black hover:text-black no-underline"><%= current_user.username %></a>
+            <span class="text-black">(<%= current_user.karma %>)</span>
+            <span class="text-black">|</span>
+            <%= link_to "logout", logout_path, data: { turbo_method: :delete }, class: "text-black hover:text-black no-underline" %>
+          <% else %>
+            <a href="<%= login_path %>" class="text-black hover:text-black no-underline">login</a>
+          <% end %>
+        </nav>
+      </header>
+
+      <%# Flash Messages %>
+      <% if flash[:notice] %>
+        <div class="bg-yellow-100 border border-yellow-300 text-yellow-800 px-3 py-1 text-[10pt] mt-1"><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="bg-red-100 border border-red-300 text-red-800 px-3 py-1 text-[10pt] mt-1"><%= flash[:alert] %></div>
+      <% end %>
+
+      <%# Main Content %>
+      <main class="py-2 px-1">
+        <%= yield %>
+      </main>
+
+      <%# Footer %>
+      <footer class="border-t-2 border-[#ff6600] mt-4 py-2 text-center text-[10pt] text-[#828282]">
+        <p>Built with Ruby on Rails</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+link_post:
+  title: "Ruby on Rails is great"
+  url: "https://rubyonrails.org"
+  body: ""
+  points: 10
+  post_type: link
+  user: alice
+
+ask_post:
+  title: "Ask HN: Best programming language?"
+  url: ""
+  body: "What is the best programming language to learn in 2026?"
+  points: 5
+  post_type: ask
+  user: bob
+
+show_post:
+  title: "Show HN: My new project"
+  url: "https://example.com/project"
+  body: "I built this cool thing"
+  points: 3
+  post_type: show
+  user: alice

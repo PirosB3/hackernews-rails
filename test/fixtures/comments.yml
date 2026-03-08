@@ -1,0 +1,13 @@
+root_comment:
+  body: "This is a great post!"
+  points: 2
+  user: bob
+  post: link_post
+  parent_comment: 
+
+reply_comment:
+  body: "I agree with you."
+  points: 1
+  user: alice
+  post: link_post
+  parent_comment: root_comment

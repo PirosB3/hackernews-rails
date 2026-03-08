@@ -1,0 +1,37 @@
+<div id="<%= dom_id(comment) %>" class="mb-2" style="margin-left: <%= depth * 40 %>px;">
+  <div class="text-[8pt] text-[#828282]">
+    <% if logged_in? && !current_user.voted_on?(comment) %>
+      <%= button_to votes_path, method: :post, params: { votable_type: "Comment", votable_id: comment.id }, class: "inline" do %>
+        <span class="cursor-pointer text-[#828282] hover:text-[#ff6600]">▲</span>
+      <% end %>
+    <% elsif logged_in? && current_user.voted_on?(comment) %>
+      <span class="text-[#ff6600]">▲</span>
+    <% end %>
+    <%= link_to comment.user.username, user_path(username: comment.user.username), class: "text-[#828282] hover:underline" %>
+    <%= time_ago_in_words_short(comment.created_at) %>
+    <% if logged_in? && current_user.voted_on?(comment) %>
+      | <%= button_to "unvote", vote_path(current_user.vote_for(comment)), method: :delete, class: "text-[#828282] hover:underline inline bg-transparent border-0 p-0 cursor-pointer text-[8pt]" %>
+    <% end %>
+  </div>
+  <div class="text-[10pt] mt-0.5 whitespace-pre-wrap"><%= comment.body %></div>
+  <% if logged_in? %>
+    <div class="mt-0.5" data-controller="reply">
+      <a href="#" class="text-[8pt] text-[#828282] hover:underline no-underline" data-action="click->reply#toggle">reply</a>
+      <div class="hidden mt-1" data-reply-target="form">
+        <%= form_with(model: [comment.post, Comment.new], url: post_comments_path(comment.post), class: "text-[10pt]") do |f| %>
+          <%= f.hidden_field :parent_comment_id, value: comment.id %>
+          <div class="mb-1">
+            <%= f.text_area :body, rows: 4, cols: 60, class: "border border-gray-400 p-1 text-[10pt]" %>
+          </div>
+          <%= f.submit "reply", class: "bg-gray-200 border border-gray-400 px-2 py-0.5 cursor-pointer text-[10pt]" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div id="<%= dom_id(comment, :replies) %>">
+    <% comment.replies.order(points: :desc, created_at: :asc).each do |reply| %>
+      <%= render partial: "comments/comment", locals: { comment: reply, depth: depth + 1 } %>
+    <% end %>
+  </div>
+</div>
