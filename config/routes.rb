@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
+  resources :passkey_registrations, only: [ :new, :create, :destroy ]
+  resources :passkey_sessions, only: [ :new, :create ]
+
   resources :users, only: [:show], param: :username
 
   resources :posts do

@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :passkey_credentials, dependent: :destroy
 
   validates :username, presence: true,
                        uniqueness: { case_sensitive: false },

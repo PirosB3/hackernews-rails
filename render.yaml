@@ -21,6 +21,8 @@ services:
         value: "true"
       - key: RAILS_SERVE_STATIC_FILES
         value: "true"
+      - key: WEBAUTHN_ORIGIN
+        value: "https://hackernews-8pt4.onrender.com"
 
 databases:
   - name: hackernews-db

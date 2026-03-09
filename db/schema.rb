@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_08_213711) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_09_021511) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "points", default: 0, null: false
@@ -22,6 +22,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_08_213711) do
     t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "passkey_credentials", force: :cascade do |t|
+    t.string "external_id", null: false
+    t.string "public_key", null: false
+    t.string "nickname"
+    t.integer "sign_count", default: 0, null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_passkey_credentials_on_external_id", unique: true
+    t.index ["user_id"], name: "index_passkey_credentials_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -62,6 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_08_213711) do
   add_foreign_key "comments", "comments", column: "parent_comment_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "passkey_credentials", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "votes", "users"
 end
